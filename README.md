@@ -50,4 +50,5 @@
 -   In **import.qmd**, run the first code block to create and use the function to scrape the team names from the Beverly Bandits website.
 -   Moving into **cleaning.qmd**, run the first code block in order to create a tibble and organize the scraped data.
 -   Next, run the code block below, using the organized data to create scrapable links for coach information.
--   Move back into **import.qmd**. 
+-   Move back into **import.qmd**. Run the final code block to scrape coach information from the generated links.
+-   Finally, in **cleaning.qmd**, run the last three code blocks. The first will create a tibble, bind the scraped information with our earlier data frame, and extract the coach information using regular expressions. The next code block will clean up the data, removing white spaces, unneeded columns, ensuring proper and consistent formatting, etc. Lastly, the final code block outputs the clean data frame as a CSV file.
