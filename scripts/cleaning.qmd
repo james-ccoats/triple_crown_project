@@ -22,6 +22,7 @@ beverly_bandits |>
   mutate(level = str_extract(team_name, "Futures|Premier"),
          coaches = str_extract(team_name, "[\\w/]+(?=\\s*\\d+u)"),
          coaches = str_replace_all(coaches, "/", "-"),
-         coach_link = str_glue("https://thebeverlybandits.com/team/{level}/{coaches}/{age_group}/{state}/coaches/")) -> coach_links
+         coach_link = str_glue("https://thebeverlybandits.com/team/{level}-{coaches}-{age_group}-{state}/coaches"),
+         coach_link = tolower(coach_link)) -> coach_links
 ```
 
