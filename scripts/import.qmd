@@ -1,0 +1,52 @@
+---
+title: "import"
+format: html
+---
+
+```{r}
+#Load relevant packages.
+library(tidyverse)
+library(rvest)
+library(janitor)
+library(httr2)
+library(jsonlite)
+```
+
+```{r}
+#create 
+fetch_teams <- function(page) {
+  message("Fetching page ", page)
+  
+  resp <- request("https://thebeverlybandits.com/xhr/") |>
+    req_method("POST") |>
+    req_headers(
+      "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      "Origin" = "https://thebeverlybandits.com",
+      "Referer" = "https://thebeverlybandits.com/teams/",
+      "X-Requested-With" = "XMLHttpRequest",
+      "Accept" = "*/*",
+      "Content-Type" = "application/x-www-form-urlencoded"
+    ) |>
+    req_body_form(
+      action = "tus_query_pd_teams",
+      `args[page]` = page,
+      `args[perpage]` = 12,
+      `args[is_filtering]` = 1,
+      `args[has_load_more]` = 1,
+      `args[is_getting_more]` = "true",
+      `args[sort]` = "division_asc"
+    ) |>
+    req_perform() |>
+    resp_body_string()
+  
+  json_txt <- str_extract(resp, "(?<=##__wpvr__##).*(?=##__wpvr__##)")
+  
+  read_html(jsonlite::fromJSON(json_txt)$data$list_html) |>
+    html_elements(".tus_sui_card_title.is_primary_font") |>
+    html_text2()
+}
+
+teams <- map(.x = 1:2, .f = fetch_teams) |> list_c()
+
+```
+

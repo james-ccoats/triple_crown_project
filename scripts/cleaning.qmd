@@ -1,0 +1,27 @@
+---
+title: "cleaning"
+format: html
+---
+
+```{r}
+#create tibble for data cleaning
+team_info <- tibble(info = teams)
+
+#clean up full team name, add age group and state column. 
+team_info |>
+  mutate(team_name = str_squish(info),
+    age_group = str_extract(team_name, "[0-9]{2}u$"),
+    state = str_extract(team_name, "(?<=\\().*?(?=\\))")) -> beverly_bandits
+```
+
+```{r}
+#create links to be scraped for coach information. 
+#correct format is "https://thebeverlybandits.com/team/premierorfutures-coachlastname-agegroup-state/coaches/
+
+beverly_bandits |>
+  mutate(level = str_extract(team_name, "Futures|Premier"),
+         coaches = str_extract(team_name, "[\\w/]+(?=\\s*\\d+u)"),
+         coaches = str_replace_all(coaches, "/", "-"),
+         coach_link = str_glue("https://thebeverlybandits.com/team/{level}/{coaches}/{age_group}/{state}/coaches/")) -> coach_links
+```
+
