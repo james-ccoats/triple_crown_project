@@ -1,0 +1,3 @@
+Data File Name: beverly_bandits_coaches_info.csv
+
+Cleaning Script: ./scripts/cleaning.qmd

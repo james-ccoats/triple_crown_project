@@ -1,0 +1,47 @@
+CODEBOOK: beverly_bandits_coaches_info.csv
+
+This codebook describes the variables in the beverly_bandits_coaches_info.csv
+dataset, which contains information about the coaches of the Beverly Bandits softball organization.
+
+Total Variables: 10
+Total Observations: 41
+
+1. team_name
+Variable Type: Text
+Description: Name of team as listed on website. 
+
+2. first_name
+Variable Type: Text
+Description: First name of a coach of a given team. 
+
+3. last_name
+Variable Type: Text
+Description: Last name of a coach of a given team. 
+
+4. position
+Variable Type: Ordinal
+Description: Coaching Position of coach of a given team (head, assistant, etc.)
+
+5. email
+Variable Type: Text
+Description: Email for listed coach. 
+
+6. phone_number
+Variable Type: Text
+Description: Phone number for listed coach. 
+
+7. age_group
+Variable Type: Nominal
+Description: Age group of the team of the listed coach. 
+
+8. state
+Variable Type: Nominal
+Description: Home state of team of the listed coach
+
+9. level
+Variable Type: Ordinal
+Description: Level of team of the listed coach. Can be premier or futures. 
+
+10. team_link
+Variable Type: Text
+Description: link to website for the team of the listed coach. 
