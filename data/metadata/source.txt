@@ -1,0 +1,25 @@
+Source Name: The Beverly Bandits
+Website URL: https://thebeverlybandits.com
+Specific Pages Scraped:
+  - Teams listing: https://thebeverlybandits.com/teams/
+  - Individual team pages (for coach information)
+
+Data Collected:
+  1. Team names and information
+  2. Coach information from team roster pages
+
+API Endpoint Used:
+  - POST https://thebeverlybandits.com/xhr/
+  - Action: tus_query_pd_teams
+  - Returns paginated team data in JSON format
+
+Scraping Method:
+  - Teams: AJAX POST requests using httr2 package
+  - Coach info: Dynamic page rendering using rvest::read_html_live()
+
+Date Accessed: January 2026
+
+Notes:
+  - Team data is paginated (12 teams per page)
+  - Coach information requires JavaScript rendering such that emails are not redacted.
+  - 3-second delay implemented between coach page requests
