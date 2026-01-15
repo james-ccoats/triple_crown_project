@@ -13,8 +13,8 @@ library(jsonlite)
 ```
 
 ```{r}
-#create 
-fetch_teams <- function(page) {
+#create function to scrape team names. 
+fetch_teams_info <- function(page) {
   message("Fetching page ", page)
   
   resp <- request("https://thebeverlybandits.com/xhr/") |>
@@ -42,11 +42,32 @@ fetch_teams <- function(page) {
   json_txt <- str_extract(resp, "(?<=##__wpvr__##).*(?=##__wpvr__##)")
   
   read_html(jsonlite::fromJSON(json_txt)$data$list_html) |>
-    html_elements(".tus_sui_card_title.is_primary_font") |>
+    html_elements(".tus_sui_card_inner") |>
     html_text2()
 }
 
 teams <- map(.x = 1:2, .f = fetch_teams) |> list_c()
 
 ```
+
+```{r}
+#scrape coach information from scrapable links created. 
+
+scrape_coach_info <- function(link){
+  sess <- read_html_live(link)
+  Sys.sleep(3)
+  
+  result <- sess |>
+    html_elements(".tus_mroster_card_inner") |>
+    html_text2()
+  
+  sess$session$close()
+  
+  result
+}
+
+coach_information <- map(.x = coach_links$coach_link, .f = scrape_coach_info, .progress = TRUE)
+
+```
+
 
