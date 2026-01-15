@@ -46,7 +46,7 @@ fetch_teams_info <- function(page) {
     html_text2()
 }
 
-teams <- map(.x = 1:2, .f = fetch_teams) |> list_c()
+teams <- map(.x = 1:2, .f = fetch_teams_info) |> list_c()
 
 ```
 
@@ -66,7 +66,7 @@ scrape_coach_info <- function(link){
   result
 }
 
-coach_information <- map(.x = coach_links$coach_link, .f = scrape_coach_info, .progress = TRUE)
+coach_information <- map(.x = coach_links$coach_link, .f = scrape_coach_info, .progress = TRUE) 
 
 ```
 
