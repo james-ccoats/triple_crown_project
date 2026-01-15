@@ -54,12 +54,13 @@ coach_df_prepped |>
          phone_number = str_replace_all(phone_number, " ", "-"),
          team_link = str_remove(coach_link, "/coaches"))|>
   separate(coach_name, into = c("first_name", "last_name"), sep = " ", extra = "merge", fill = "right")|>
-  select(team_name, first_name, last_name, position, email, phone_number, age_group, state, level, team_link) -> coach_df_cleaned
+  select(team_name, first_name, last_name, position, email, phone_number, age_group, state, level, team_link)|>
+  mutate(across(everything(), str_squish)) -> coach_df_cleaned
 ```
 
 ```{r}
 #export as CSV. 
 
-
+write_csv(coach_df_cleaned, "beverly_bandits_coaches_info.csv")
 ```
 
