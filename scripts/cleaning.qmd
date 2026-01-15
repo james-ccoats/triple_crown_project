@@ -23,6 +23,26 @@ beverly_bandits |>
          coaches = str_extract(team_name, "[\\w/]+(?=\\s*\\d+u)"),
          coaches = str_replace_all(coaches, "/", "-"),
          coach_link = str_glue("https://thebeverlybandits.com/team/{level}-{coaches}-{age_group}-{state}/coaches"),
-         coach_link = tolower(coach_link)) -> coach_links
+         coach_link = tolower(coach_link))|>
+  select(-info)-> coach_links
+```
+
+```{r}
+#clean coach information
+coach_df = tibble(info = coach_information)
+
+#bind columns so each coach is associated with the proper team.
+bind_cols(coach_links, coach_df) -> coach_df
+
+#extract coach information from the scraped html. 
+coach_df |>
+  unnest(info)|>
+  mutate(info = str_remove_all(info, "View Full Profile"),
+         info = str_remove_all(info, "\\n"),
+         coach_name = if_else(str_detect(info, "Position"), str_extract(info, ".*(?=Position)"), str_extract(info, ".*(?=Email)")),
+         position = if_else(str_detect(info, "Email"), str_extract(info, "(?<=Position).*?(?=Email)"), str_extract(info, "(?<=Position).*?(?=Phone)")),
+         email = str_extract(info, "(?<=Email).*?(?=Phone)"),
+         phone_number = str_extract(info, "(?<=Phone).*"),
+         phone_number = na_if(phone_number, "N/A"))-> ee
 ```
 
