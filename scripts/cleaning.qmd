@@ -16,7 +16,7 @@ team_info |>
 
 ```{r}
 #create links to be scraped for coach information. 
-#correct format is "https://thebeverlybandits.com/team/premierorfutures-coachlastname-agegroup-state/coaches/
+#correct format is "https://thebeverlybandits.com/team/premierorfutures-coachlastname-agegroup-state/coaches
 
 beverly_bandits |>
   mutate(level = str_extract(team_name, "Futures|Premier"),
@@ -43,6 +43,23 @@ coach_df |>
          position = if_else(str_detect(info, "Email"), str_extract(info, "(?<=Position).*?(?=Email)"), str_extract(info, "(?<=Position).*?(?=Phone)")),
          email = str_extract(info, "(?<=Email).*?(?=Phone)"),
          phone_number = str_extract(info, "(?<=Phone).*"),
-         phone_number = na_if(phone_number, "N/A"))-> ee
+         phone_number = na_if(phone_number, "N/A"))-> coach_df_prepped
+```
+
+```{r}
+#clean the prepped coach_df_prepped for final tidyness and organization. put first and last name into seperate columns, remove unneeded intermediate columns, clean up team links, ensure consistent formatting across rows. 
+
+coach_df_prepped |>
+  mutate(phone_number = str_remove_all(phone_number, "[\\(\\)]"),
+         phone_number = str_replace_all(phone_number, " ", "-"),
+         team_link = str_remove(coach_link, "/coaches"))|>
+  separate(coach_name, into = c("first_name", "last_name"), sep = " ", extra = "merge", fill = "right")|>
+  select(team_name, first_name, last_name, position, email, phone_number, age_group, state, level, team_link) -> coach_df_cleaned
+```
+
+```{r}
+#export as CSV. 
+
+
 ```
 
