@@ -24,16 +24,6 @@
 
                 -   source.txt
 
-                -   codebook.txt
-
-        -   cleaned_data/
-
-            -   metadata/
-
-                -   source.txt
-
-                -   codebook.txt
-
     -   scripts/
 
         -   import.qmd
@@ -41,6 +31,12 @@
         -   cleaning.qmd
 
     -   output/
+
+        -   metadata/
+
+            -   beverly_bandits_coaches_info_codebook.txt
+
+            -   beverly_bandits_coaches_info_source.txt
 
         -   beverly_bandits_coaches_info.csv
 
